@@ -28,7 +28,6 @@ export class FeatureListTreeDataProvider
     | undefined;
 
   getTreeItem(element: FeatureListTreeItem): TreeItem | Thenable<TreeItem> {
-    console.log("returning element", element);
     return element;
   }
 
@@ -47,21 +46,14 @@ export class FeatureListTreeDataProvider
 
     return Promise.resolve(treeItems);
   }
+
+  // TODO: Do we need to implement these?
   // getParent?(element: FeatureListTreeItem): ProviderResult<FeatureListTreeItem> {
   //   throw new Error("Method not implemented.");
   // }
   // resolveTreeItem?(item: TreeItem, element: FeatureListTreeItem, token: CancellationToken): ProviderResult<TreeItem> {
   //   throw new Error("Method not implemented.");
   // }
-
-  private pathExists(p: string): boolean {
-    try {
-      Fs.accessSync(p);
-    } catch (err) {
-      return false;
-    }
-    return true;
-  }
 }
 
 class FeatureListTreeItem extends TreeItem {
@@ -71,8 +63,8 @@ class FeatureListTreeItem extends TreeItem {
     public readonly collapsibleState: TreeItemCollapsibleState
   ) {
     super(label, collapsibleState);
-    this.tooltip = this.feature.description || "";
-    this.description = this.feature.valueType;
+    this.tooltip = this.feature.raw || "";
+    this.description = `(default: ${this.feature.defaultValue})`;
   }
 
   iconPath = {

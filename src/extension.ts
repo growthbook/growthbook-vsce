@@ -1,32 +1,27 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
+import { ApiClient } from "./api/api-client";
 import { FeatureListTreeDataProvider } from "./features/FeatureListTreeDataProvider";
-import { FeatureDefinition } from "./features/types";
+import { getWorkspaceRootPath } from "./utils/vscode-utils";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   // Register the tree view
-  const rootPath =
-    vscode.workspace.workspaceFolders &&
-    vscode.workspace.workspaceFolders.length > 0
-      ? vscode.workspace.workspaceFolders[0].uri.fsPath
-      : undefined;
+  const rootPath = getWorkspaceRootPath();
 
   console.log("rootPath", rootPath);
 
-  // TODO: Remove mock features
-  const features: FeatureDefinition[] = [];
-  for (let i = 1; i <= 10; i++) {
-    features.push({
-      id: `feature_number_${i}`,
-      description: `This is a description of the feature at index ${i}`,
-      valueType: "boolean",
-    });
-  }
-
   if (rootPath) {
+    // TODO: Read config from local file
+    const apiClient = new ApiClient({
+      appHost: "http://localhost:3100",
+      featuresHost: "http://localhost:3100",
+      apiKey: "key_prod_b118a91f4800c2c6",
+    });
+    const features = await apiClient.getFeatures();
+
     vscode.window.registerTreeDataProvider(
       "featuresList",
       new FeatureListTreeDataProvider(context, features)
