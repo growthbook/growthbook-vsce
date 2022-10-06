@@ -45,7 +45,6 @@ export const getGrowthBookConfig = (
 
   try {
     const configContents = Fs.readFileSync(configPath, "utf-8");
-    console.log("config contents", configContents);
     const parsedConfig = JSON.parse(configContents);
 
     return {
