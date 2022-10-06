@@ -1,4 +1,3 @@
-import * as Fs from "fs";
 import * as Path from "path";
 import {
   Event,
@@ -33,6 +32,7 @@ export class FeatureListTreeDataProvider
 
   // TODO: Do we need this element??
   getChildren(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     element?: FeatureListTreeItem | undefined
   ): ProviderResult<FeatureListTreeItem[]> {
     const treeItems = this.features.map(
@@ -56,7 +56,7 @@ export class FeatureListTreeDataProvider
   // }
 }
 
-class FeatureListTreeItem extends TreeItem {
+export class FeatureListTreeItem extends TreeItem {
   constructor(
     public readonly label: string,
     private feature: FeatureDefinition,

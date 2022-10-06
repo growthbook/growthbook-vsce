@@ -25,3 +25,35 @@ export const doesPathExist = (path: string): boolean => {
   }
   return true;
 };
+
+export type GrowthBookConfig = {
+  featuresHost: string | null;
+  featuresKey: string | null;
+  appHost: string | null;
+};
+
+/**
+ * Get the GrowthBook config from the provided workspace root.
+ * If no file is found, or the file fails to parse, it will return null.
+ * @param workspaceRoot
+ * @returns
+ */
+export const getGrowthBookConfig = (
+  workspaceRoot: string
+): GrowthBookConfig | null => {
+  const configPath = `${workspaceRoot}/.growthbook.json`;
+
+  try {
+    const configContents = Fs.readFileSync(configPath, "utf-8");
+    console.log("config contents", configContents);
+    const parsedConfig = JSON.parse(configContents);
+
+    return {
+      featuresHost: parsedConfig.featuresHost || null,
+      featuresKey: parsedConfig.featuresKey || null,
+      appHost: parsedConfig.appHost || null,
+    };
+  } catch (e) {
+    return null;
+  }
+};

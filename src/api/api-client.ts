@@ -12,7 +12,8 @@ export interface IApiClient {
 type ApiClientConfig = {
   featuresHost: string;
   appHost: string;
-  apiKey: string;
+  // apiKey: string;
+  featuresKey: string;
 };
 
 export enum ApiError {
@@ -33,7 +34,7 @@ export class ApiClient implements IApiClient {
 
   getFeatures = async () => {
     return this.featuresClient
-      .get<FeaturesResponse>(`/api/features/${this.options.apiKey}`)
+      .get<FeaturesResponse>(`/api/features/${this.options.featuresKey}`)
       .then((response) => {
         const features: FeatureDefinition[] = [];
 
