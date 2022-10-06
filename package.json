@@ -14,7 +14,6 @@
     "onCommand:growthbook.helloWorld"
   ],
   "main": "./out/extension.js",
-  
   "contributes": {
     "views": {
       "explorer": [
@@ -36,7 +35,8 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
-    "lint": "eslint src --ext ts",
+    "lint": "eslint src --ext ts --fix --cache --cache-strategy content",
+    "lint:ci": "yarn lint -- --max-warnings 0",
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
@@ -44,14 +44,18 @@
     "@types/mocha": "^10.0.0",
     "@types/node": "16.x",
     "@types/vscode": "^1.71.0",
-    "@typescript-eslint/eslint-plugin": "^5.38.1",
-    "@typescript-eslint/parser": "^5.38.1",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
     "@vscode/test-electron": "^2.1.5",
     "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.5.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "glob": "^8.0.3",
     "mocha": "^10.0.0",
+    "prettier": "^2.7.1",
     "typescript": "^4.8.4"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
