@@ -40,7 +40,7 @@ export class ApiClient implements IApiClient {
         for (const [key, value] of Object.entries(response.data.features)) {
           features.push({
             id: key,
-            defaultValue: getPrintedDefaultType(value.defaultValue),
+            defaultValue: prettyPrinted(value.defaultValue),
             raw: JSON.stringify(value, null, 2),
           });
         }
@@ -55,7 +55,7 @@ export class ApiClient implements IApiClient {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- I have no idea what this object is
-const getPrintedDefaultType = (o: any): string => {
+const prettyPrinted = (o: any): string => {
   if (typeof o === "string") {
     return o;
   }
@@ -67,7 +67,7 @@ const getPrintedDefaultType = (o: any): string => {
   try {
     return JSON.stringify(o, null, 2);
   } catch (error) {
-    console.error("❗️ getPrintedDefaultType", error);
+    console.error("❗️ prettyPrinted", error);
     return String(o);
   }
 };

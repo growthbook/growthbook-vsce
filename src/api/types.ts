@@ -13,6 +13,7 @@ type FeatureRule = {
 };
 
 type FeatureProperties = {
+  // TODO: Add description
   defaultValue: boolean | string;
   rules: FeatureRule[];
 };

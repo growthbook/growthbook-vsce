@@ -11,8 +11,6 @@ export async function activate(context: vscode.ExtensionContext) {
   // Register the tree view
   const rootPath = getWorkspaceRootPath();
 
-  console.log("rootPath", rootPath);
-
   if (rootPath) {
     // TODO: Read config from local file
     const apiClient = new ApiClient({
