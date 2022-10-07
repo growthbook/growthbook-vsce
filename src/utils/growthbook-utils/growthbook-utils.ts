@@ -1,4 +1,4 @@
-import { GrowthBookConfig } from "./vscode-utils";
+import { GrowthBookConfig } from "../vscode-utils";
 
 type ConfigValidation = {
   isValid: boolean;

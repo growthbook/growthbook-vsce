@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { ExtensionInitialization } from "./services/ExtensionInitialization";
-import { validateConfig } from "./utils/growthbook-utils";
+import { validateConfig } from "./utils/growthbook-utils/growthbook-utils";
 import {
   doesPathExist,
   getGrowthBookConfig,

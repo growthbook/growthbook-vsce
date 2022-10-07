@@ -1,8 +1,6 @@
 {
 	"exclude": [
-		"/node_modules/**/*",
-		"src/jest.config.ts",
-		"src/**/*.test.ts"
+		"src/jest.config.ts"
 	],
 	"compilerOptions": {
 		"module": "commonjs",

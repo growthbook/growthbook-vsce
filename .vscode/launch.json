@@ -18,17 +18,17 @@
 			"preLaunchTask": "${defaultBuildTask}"
 		},
 		{
-			"name": "Extension Tests",
-			"type": "extensionHost",
+			"name": "Jest unit tests",
+			"type": "node",
 			"request": "launch",
+			"program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
 			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}",
-				"--extensionTestsPath=${workspaceFolder}/out/test/suite/index"
+				"--verbose",
+				"-i",
+				"--no-cache"
 			],
-			"outFiles": [
-				"${workspaceFolder}/out/test/**/*.js"
-			],
-			"preLaunchTask": "${defaultBuildTask}"
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen"
 		}
 	]
 }
