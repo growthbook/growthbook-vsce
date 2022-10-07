@@ -1,0 +1,36 @@
+name: CI
+
+# Runs on every push to every branch
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  # Linting, type-checking, and tests
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: install dependencies
+        run: |
+          yarn
+         
+        env:
+          CI: true
+
+      - name: lint
+        run: |
+          yarn lint
+          yarn workspace stats lint
+
+      - name: test
+        run: |
+          yarn test
