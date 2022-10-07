@@ -32,9 +32,9 @@ export class CreateGrowthBookConfigCommand implements ICommand {
 
       try {
         const defaultConfig: GrowthBookConfig = {
-          featuresHost: "http://localhost:3100",
-          featuresKey: "key_env_***",
-          appHost: "http://localhost:3100",
+          featuresHost: "https://cdn.growthbook.io",
+          featuresKey: "key_prod_",
+          appHost: "https://app.growthbook.io",
         };
 
         const buffer = Buffer.from(JSON.stringify(defaultConfig, null, 2));
