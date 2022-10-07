@@ -29,7 +29,6 @@ jobs:
       - name: lint
         run: |
           yarn lint
-          yarn workspace stats lint
 
       - name: test
         run: |
