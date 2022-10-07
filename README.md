@@ -31,6 +31,8 @@ yarn install
 
 To develop the extension, open the code base in Visual Studio Code and hit F5. You can also open the Run/Debug tab (4th from the top) and press the Run button. Make sure you have "Extension" selected.
 
+Additional documentation can be found in the [vsc-extension-quickstart.md](vsc-extension-quickstart.md) file.
+
 
 ### Tests
 

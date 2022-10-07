@@ -1,8 +1,9 @@
 {
   "name": "growthbook",
   "displayName": "growthbook",
-  "description": "TODO",
+  "description": "View your project's GrowthBook features right from Visual Studio Code",
   "version": "0.0.1",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.71.0"
   },
@@ -35,7 +36,8 @@
     "build": "yarn run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "lint": "eslint src --ext ts --fix --cache --cache-strategy content",
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint src --ext ts --cache --cache-strategy content",
     "lint:ci": "yarn lint -- --max-warnings 0",
     "coverage": "open coverage/index.html",
     "test": "jest --config jest.config.js"
