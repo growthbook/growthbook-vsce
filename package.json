@@ -12,7 +12,8 @@
   ],
   "activationEvents": [
     "onView:featuresList",
-    "onCommand:growthbook.helloWorld"
+    "onCommand:growthbook.helloWorld",
+    "onCommand:growthbook.refreshFeatures"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -26,8 +27,12 @@
     },
     "commands": [
       {
+        "command": "growthbook.refreshFeatures",
+        "title": "GrowthBook: Refresh Features"
+      },
+      {
         "command": "growthbook.helloWorld",
-        "title": "Hello World"
+        "title": "GrowthBook: Hello World"
       }
     ]
   },

@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { ApiClient } from "../api/api-client";
+import { RefreshGrowthBookCommand } from "../commands/refresh-growthbook-command";
 import {
   FeatureListTreeDataProvider,
   FeatureListTreeItem,
@@ -29,7 +30,8 @@ export class ExtensionInitialization implements IExtensionInitialization {
 
   private constructor(
     private context: vscode.ExtensionContext,
-    private growthBookConfig: GrowthBookConfig
+    private growthBookConfig: GrowthBookConfig,
+    private onError: (message: string) => void
   ) {
     const { featuresHost, featuresKey, appHost } = this.growthBookConfig;
 
@@ -46,7 +48,8 @@ export class ExtensionInitialization implements IExtensionInitialization {
     context: vscode.ExtensionContext,
     growthBookConfig: GrowthBookConfig | null = getGrowthBookConfig(
       getWorkspaceRootPath() || ""
-    )
+    ),
+    onError: (message: string) => void
   ): ExtensionInitialization | null {
     if (!growthBookConfig) {
       console.error("ImplementationError: missing GrowthBook config");
@@ -63,7 +66,8 @@ export class ExtensionInitialization implements IExtensionInitialization {
 
     extensionInitializationService = new ExtensionInitialization(
       context,
-      growthBookConfig
+      growthBookConfig,
+      onError
     );
 
     return extensionInitializationService;
@@ -73,10 +77,20 @@ export class ExtensionInitialization implements IExtensionInitialization {
    * Implement in the extension's activate() lifecycle hook
    */
   async activate(): Promise<void> {
-    this.features = await this.apiClient.getFeatures();
-    this.initializeTreeView();
+    try {
+      // Initialize the commands
+      this.context.subscriptions.push(
+        new RefreshGrowthBookCommand(this.refreshFeatures.bind(this)).register()
+      );
 
-    return Promise.resolve();
+      // Initialize the tree view
+      this.features = await this.apiClient.getFeatures();
+      this.initializeTreeView();
+
+      return Promise.resolve();
+    } catch (e) {
+      return Promise.reject("GrowthBook: Cannot fetch features");
+    }
   }
 
   /**
@@ -85,6 +99,19 @@ export class ExtensionInitialization implements IExtensionInitialization {
   async deactivate(): Promise<void> {
     this.treeView?.dispose();
     return Promise.resolve();
+  }
+
+  async refreshFeatures(): Promise<void> {
+    this.features = [];
+    this.initializeTreeView();
+
+    try {
+      this.features = await this.apiClient.getFeatures();
+      this.initializeTreeView();
+      return Promise.resolve();
+    } catch (e) {
+      this.onError("GrowthBook: Cannot refresh features");
+    }
   }
 
   /**

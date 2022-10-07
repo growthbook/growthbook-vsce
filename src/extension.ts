@@ -1,5 +1,9 @@
 import * as vscode from "vscode";
 import { ExtensionInitialization } from "./services/ExtensionInitialization";
+import {
+  onExtensionError,
+  onExtensionWarning,
+} from "./utils/error-messaging/error-messaging-utils";
 import { validateConfig } from "./utils/growthbook-utils/growthbook-utils";
 import {
   doesPathExist,
@@ -17,7 +21,7 @@ export async function activate(context: vscode.ExtensionContext) {
   const config = getGrowthBookConfig(rootPath);
   if (!config) {
     if (configFileExists) {
-      vscode.window.showErrorMessage(`GrowthBook config cannot be read`);
+      onExtensionError(`GrowthBook config cannot be read`);
       return;
     }
     return;
@@ -26,18 +30,21 @@ export async function activate(context: vscode.ExtensionContext) {
   const { isValid, errors } = validateConfig(config);
   if (!isValid) {
     console.error("Invalid GrowthBook configuration", errors);
-    vscode.window.showWarningMessage(
-      `GrowthBook config missing: ${errors.join(", ")}`
-    );
+    onExtensionWarning(`GrowthBook config missing: ${errors.join(", ")}`);
     return;
   }
 
   extensionInitializationService = ExtensionInitialization.getInstance(
     context,
-    config
+    config,
+    (s) => {
+      onExtensionError(s);
+    }
   );
 
-  extensionInitializationService?.activate();
+  extensionInitializationService?.activate().catch((e) => {
+    onExtensionError(e);
+  });
 }
 
 export function deactivate() {
