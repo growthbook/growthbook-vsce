@@ -11,12 +11,22 @@ type ConfigValidation = {
  * @param config
  * @returns
  */
-export const validateConfig = (config: GrowthBookConfig): ConfigValidation => {
+export const validateConfig = (
+  config: GrowthBookConfig | null
+): ConfigValidation => {
+  if (!config) {
+    return {
+      isValid: false,
+      errors: ["Config not found"],
+    };
+  }
+
   const requiredConfig: (keyof GrowthBookConfig)[] = [
     "appHost",
     "featuresHost",
     "featuresKey",
   ];
+
   const errors: string[] = requiredConfig.filter((k) => !config[k]);
 
   if (errors.length) {

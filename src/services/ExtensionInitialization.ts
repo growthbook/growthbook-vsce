@@ -6,36 +6,77 @@ import {
   FeatureListTreeItem,
 } from "../features/FeatureListTreeDataProvider";
 import { FeatureDefinition } from "../features/types";
+import { validateConfig } from "../utils/growthbook-utils/growthbook-utils";
 import {
+  doesPathExist,
   getGrowthBookConfig,
   getWorkspaceRootPath,
   GrowthBookConfig,
 } from "../utils/vscode-utils";
 
-interface IExtensionInitialization {
+interface IExtensionManagement {
   activate(): Promise<void>;
   deactivate(): Promise<void>;
 }
 
-let extensionInitializationService: ExtensionInitialization | null = null;
+let extensionManager: ExtensionManagement | null = null;
 
 /**
  * Use the getInstance() method of the class.
  * If you do not provide a valid config, your instance will be null.
  */
-export class ExtensionInitialization implements IExtensionInitialization {
-  private apiClient: ApiClient;
+export class ExtensionManagement implements IExtensionManagement {
+  private growthBookConfig: GrowthBookConfig | null = null;
+  private apiClient: ApiClient | null = null;
   private features: FeatureDefinition[] = [];
   private treeView: vscode.TreeView<FeatureListTreeItem> | null = null;
 
   private constructor(
     private context: vscode.ExtensionContext,
-    private growthBookConfig: GrowthBookConfig,
-    private onError: (message: string) => void
+    private onError: (message: string) => void,
+    private onWarning: (message: string) => void
   ) {
+    this.initializeGrowthBookConfig();
+  }
+
+  /**
+   * Retrieves the config from the workspace's .growthbook.json config file.
+   * Performs validation and warns the user if there are any issues with the config if it has one.
+   * @returns
+   */
+  private initializeGrowthBookConfig(): void {
+    this.growthBookConfig = null;
+    this.apiClient = null;
+
+    const rootPath = getWorkspaceRootPath();
+    const configFileExists = doesPathExist(`${rootPath}/.growthbook.json`);
+
+    // User is not in a workspace
+    if (!rootPath) return;
+
+    // User has not defined a .growthbook.json
+    if (!configFileExists) return;
+
+    // User has defined a .growthbook.json file
+
+    this.growthBookConfig = getGrowthBookConfig(rootPath);
+
+    // The config file cannot be parsed
+    if (!this.growthBookConfig) {
+      this.onError(`GrowthBook config cannot be read`);
+      return;
+    }
+
+    // Perform config validation. If there are any missing fields, the user will see a warning.
+    const isValid = this.validateConfigForUser();
+    if (!isValid) {
+      return;
+    }
+
+    // The .growthbook.json config file is considered to be valid at this point and we can safely initialize the ApiClient
     const { featuresHost, featuresKey, appHost } = this.growthBookConfig;
 
-    /* eslint-disable @typescript-eslint/no-non-null-assertion -- handled in getInstance() */
+    /* eslint-disable @typescript-eslint/no-non-null-assertion -- handled by validateConfig() */
     this.apiClient = new ApiClient({
       appHost: appHost!,
       featuresHost: featuresHost!,
@@ -46,31 +87,14 @@ export class ExtensionInitialization implements IExtensionInitialization {
 
   static getInstance(
     context: vscode.ExtensionContext,
-    growthBookConfig: GrowthBookConfig | null = getGrowthBookConfig(
-      getWorkspaceRootPath() || ""
-    ),
-    onError: (message: string) => void
-  ): ExtensionInitialization | null {
-    if (!growthBookConfig) {
-      console.error("ImplementationError: missing GrowthBook config");
-      return null;
+    onError: (message: string) => void,
+    onWarning: (message: string) => void
+  ): ExtensionManagement {
+    if (!extensionManager) {
+      extensionManager = new ExtensionManagement(context, onError, onWarning);
     }
 
-    const { featuresHost, featuresKey, appHost } = growthBookConfig;
-    if (!featuresHost || !featuresKey || !appHost) {
-      console.error(
-        "ImplementationError: all GrowthBook config values are required for initialization"
-      );
-      return null;
-    }
-
-    extensionInitializationService = new ExtensionInitialization(
-      context,
-      growthBookConfig,
-      onError
-    );
-
-    return extensionInitializationService;
+    return extensionManager;
   }
 
   /**
@@ -84,8 +108,10 @@ export class ExtensionInitialization implements IExtensionInitialization {
       );
 
       // Initialize the tree view
-      this.features = await this.apiClient.getFeatures();
-      this.initializeTreeView();
+      if (this.apiClient) {
+        this.features = await this.apiClient.getFeatures();
+        this.initializeTreeView();
+      }
 
       return Promise.resolve();
     } catch (e) {
@@ -102,8 +128,24 @@ export class ExtensionInitialization implements IExtensionInitialization {
   }
 
   async refreshFeatures(): Promise<void> {
+    // Re-initialize the config. This will let the user know if the config is invalid.
+    this.initializeGrowthBookConfig();
+
+    // Clear existing tree
     this.features = [];
     this.initializeTreeView();
+
+    // Do not proceed if the config is invalid
+    if (!this.isConfigValid()) {
+      this.onError("Invalid GrowthBook config");
+      return;
+    }
+
+    if (!this.apiClient) {
+      // We should not get here. If we have a valid config and no API client, there is an issue.
+      this.onError("GrowthBook: Unknown extension error");
+      return;
+    }
 
     try {
       this.features = await this.apiClient.getFeatures();
@@ -131,5 +173,22 @@ export class ExtensionInitialization implements IExtensionInitialization {
     });
 
     this.context.subscriptions.push(this.treeView);
+  }
+
+  private isConfigValid(): boolean {
+    const { isValid } = validateConfig(this.growthBookConfig);
+    return isValid;
+  }
+
+  /**
+   * Will provide user feedback when the config is not valid
+   */
+  private validateConfigForUser(): boolean {
+    const { isValid, errors } = validateConfig(this.growthBookConfig);
+    if (!isValid) {
+      this.onWarning(`GrowthBook config missing: ${errors.join(", ")}`);
+    }
+
+    return isValid;
   }
 }
