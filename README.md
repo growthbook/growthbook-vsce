@@ -1,71 +1,45 @@
-# growthbook README
+# GrowthBook Visual Studio Code extension
 
-This is the README for your extension "growthbook". After writing up a brief description, we recommend including the following sections.
+This extension allows you to see available Feature information in your project.
 
-## Features
+- [Usage](#usage)
+- [Development](#development)
+  - [Tests](#tests)
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Usage
 
-For example if there is an image subfolder under your extension project workspace:
+In order to use the extension, your project will need to have a `.growthbook.json` file. Here's a sample one:
 
-\!\[feature X\]\(images/feature-x.png\)
+```json
+{
+  "featuresHost": "http://localhost:3100",
+  "featuresKey": "key_dev_abc123xyz456",
+  "appHost": "http://localhost:3100"  
+}
+```
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+❗️ **Note**: We recommend that you omit this file from your project's version control and provide a sample `.growthbook.json.example` file that your team can copy locally, e.g. `cp .growthbook.json.example .growthbook.json`.
 
-## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## Development
 
-## Extension Settings
+Install dependencies:
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+```
+yarn install
+```
 
-For example:
+To develop the extension, open the code base in Visual Studio Code and hit F5. You can also open the Run/Debug tab (4th from the top) and press the Run button. Make sure you have "Extension" selected.
 
-This extension contributes the following settings:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+### Tests
 
-## Known Issues
+Run tests with the following command:
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+```
+yarn test
+```
 
-## Release Notes
+A Visual Studio Code launch configuration has also been provided.
 
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Tests can also be run in WebStorm using the play buttons that appear on the UI.
