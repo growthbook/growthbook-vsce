@@ -31,8 +31,8 @@
         "title": "GrowthBook: Refresh Features"
       },
       {
-        "command": "growthbook.helloWorld",
-        "title": "GrowthBook: Hello World"
+        "command": "growthbook.createConfig",
+        "title": "GrowthBook: Create a .growthbook.json configuration file"
       }
     ]
   },

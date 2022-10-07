@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { ApiClient } from "../api/api-client";
+import { CreateGrowthBookConfigCommand } from "../commands/create-config-command";
 import { RefreshGrowthBookCommand } from "../commands/refresh-growthbook-command";
 import {
   FeatureListTreeDataProvider,
@@ -104,7 +105,10 @@ export class ExtensionManagement implements IExtensionManagement {
     try {
       // Initialize the commands
       this.context.subscriptions.push(
-        new RefreshGrowthBookCommand(this.refreshFeatures.bind(this)).register()
+        new RefreshGrowthBookCommand(
+          this.refreshFeatures.bind(this)
+        ).register(),
+        new CreateGrowthBookConfigCommand().register()
       );
 
       // Initialize the tree view
