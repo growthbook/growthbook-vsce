@@ -1,0 +1,37 @@
+name: Package & Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository == 'growthbook/growthbook-vsce' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build
+        run: |
+          yarn install
+          yarn build
+
+      - name: Package
+        run: |
+          yarn package
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: growthbook-vsce
+          path: |
+            growthbook-*.vsix
+          if-no-files-found: error
+
+      # - name: Publish to Marketplace
+      #   env:
+      #     VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
+      #   run: |
+      #     npx vsce publish -p $VSCE_TOKEN
