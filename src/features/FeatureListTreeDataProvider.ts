@@ -66,7 +66,7 @@ export class FeatureListTreeItem extends TreeItem {
   }
 
   iconPath = {
-    light: Path.join(__filename, "..", "..", "..", "resources", "ic_flag.svg"),
-    dark: Path.join(__filename, "..", "..", "..", "resources", "ic_flag.svg"),
+    light: Path.join(__filename, "..", "..", "..", "resources", "ic_flag.png"),
+    dark: Path.join(__filename, "..", "..", "..", "resources", "ic_flag.png"),
   };
 }

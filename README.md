@@ -5,6 +5,7 @@ This extension allows you to see available Feature information in your project.
 - [Usage](#usage)
 - [Development](#development)
   - [Tests](#tests)
+- [Distribution](#distribution)
 
 ## Usage
 
@@ -17,6 +18,8 @@ In order to use the extension, your project will need to have a `.growthbook.jso
   "appHost": "http://localhost:3100"  
 }
 ```
+
+You can use the built-in command to generate one or create it manually.
 
 ❗️ **Note**: We recommend that you omit this file from your project's version control and provide a sample `.growthbook.json.example` file that your team can copy locally, e.g. `cp .growthbook.json.example .growthbook.json`.
 
@@ -31,8 +34,6 @@ yarn install
 
 To develop the extension, open the code base in Visual Studio Code and hit F5. You can also open the Run/Debug tab (4th from the top) and press the Run button. Make sure you have "Extension" selected.
 
-Additional documentation can be found in the [vsc-extension-quickstart.md](vsc-extension-quickstart.md) file.
-
 
 ### Tests
 
@@ -45,3 +46,12 @@ yarn test
 A Visual Studio Code launch configuration has also been provided.
 
 Tests can also be run in WebStorm using the play buttons that appear on the UI.
+
+
+## Distribution
+
+You can build the extension into a `.vsix` package by running:
+
+```
+yarn package
+```
