@@ -1,7 +1,5 @@
 import * as vscode from "vscode";
 
-// TODO: We may need to refactor this to take an error monitor
-
 /**
  * Handle the errors.
  * We can show an error to the user as well as add any error logging here

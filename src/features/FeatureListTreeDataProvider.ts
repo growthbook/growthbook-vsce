@@ -30,8 +30,8 @@ export class FeatureListTreeDataProvider
     return element;
   }
 
-  // TODO: Do we need this element??
   getChildren(
+    // Tree items can have child tree items. This is an override.
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     element?: FeatureListTreeItem | undefined
   ): ProviderResult<FeatureListTreeItem[]> {
@@ -47,12 +47,10 @@ export class FeatureListTreeDataProvider
     return Promise.resolve(treeItems);
   }
 
-  // TODO: Do we need to implement these?
   // getParent?(element: FeatureListTreeItem): ProviderResult<FeatureListTreeItem> {
-  //   throw new Error("Method not implemented.");
   // }
+
   // resolveTreeItem?(item: TreeItem, element: FeatureListTreeItem, token: CancellationToken): ProviderResult<TreeItem> {
-  //   throw new Error("Method not implemented.");
   // }
 }
 
