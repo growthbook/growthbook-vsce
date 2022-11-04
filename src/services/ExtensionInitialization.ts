@@ -122,7 +122,7 @@ export class ExtensionManagement implements IExtensionManagement {
 
       return Promise.resolve();
     } catch (e) {
-      console.error("Fetch error", e);
+      console.error("❗️ Extension activation error", e);
       return Promise.reject("GrowthBook: Cannot fetch features");
     }
   }
