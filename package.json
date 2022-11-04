@@ -23,6 +23,18 @@
           "when": "true",
           "group": "navigation"
         }
+      ],
+      "view/item/context": [
+        {
+          "command": "growthbook.copyFeatureKey",
+          "when": "view == featuresList",
+          "group": "inline"
+        },
+        {
+          "command": "growthbook.editFeature",
+          "when": "view == featuresList",
+          "group": "inline"
+        }
       ]
     },
     "viewsWelcome": [
@@ -51,6 +63,22 @@
       {
         "command": "growthbook.createConfig",
         "title": "GrowthBook: Create a .growthbook.json configuration file"
+      },
+      {
+        "command": "growthbook.copyFeatureKey",
+        "title": "Copy feature key",
+        "icon": {
+          "light": "resources/ic_copy_light.png",
+          "dark": "resources/ic_copy_dark.png"
+        }
+      },
+      {
+        "command": "growthbook.editFeature",
+        "title": "Open feature in browser",
+        "icon": {
+          "light": "resources/ic_pencil_light.png",
+          "dark": "resources/ic_pencil_dark.png"
+        }
       }
     ]
   },

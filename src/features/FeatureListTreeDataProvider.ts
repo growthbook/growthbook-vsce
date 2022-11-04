@@ -70,7 +70,11 @@ export class FeatureListTreeItem extends TreeItem {
   ) {
     super(label, collapsibleState);
     this.tooltip = this.feature.raw || "";
-    this.description = `(default: ${this.feature.defaultValue})`;
+    this.description = typeof JSON.parse(feature.raw).defaultValue;
+  }
+
+  getFeature() {
+    return this.feature;
   }
 
   iconPath = {
