@@ -12,11 +12,19 @@
   ],
   "activationEvents": [
     "onView:featuresList",
-    "onCommand:growthbook.helloWorld",
     "onCommand:growthbook.refreshFeatures"
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "menus": {
+      "view/title": [
+        {
+          "command": "growthbook.refreshFeatures",
+          "when": "true",
+          "group": "navigation"
+        }
+      ]
+    },
     "viewsWelcome": [
       {
         "view": "featuresList",
@@ -34,7 +42,11 @@
     "commands": [
       {
         "command": "growthbook.refreshFeatures",
-        "title": "GrowthBook: Refresh Features"
+        "title": "GrowthBook: Refresh Features",
+        "icon": {
+          "light": "resources/ic_refresh.png",
+          "dark": "resources/ic_refresh.png"
+        }
       },
       {
         "command": "growthbook.createConfig",

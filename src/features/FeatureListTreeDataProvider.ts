@@ -6,6 +6,7 @@ import {
   TreeDataProvider,
   TreeItem,
   TreeItemCollapsibleState,
+  EventEmitter,
 } from "vscode";
 import { FeatureDefinition } from "./types";
 
@@ -20,11 +21,18 @@ export class FeatureListTreeDataProvider
     private features: FeatureDefinition[]
   ) {}
 
+  private _onDidChangeTreeData: EventEmitter<undefined | null | void> =
+    new EventEmitter<undefined | null | void>();
+
   onDidChangeTreeData?:
     | Event<
         void | FeatureListTreeItem | FeatureListTreeItem[] | null | undefined
       >
     | undefined;
+
+  refresh(): void {
+    this._onDidChangeTreeData.fire();
+  }
 
   getTreeItem(element: FeatureListTreeItem): TreeItem | Thenable<TreeItem> {
     return element;
