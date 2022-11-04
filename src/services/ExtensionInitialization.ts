@@ -1,6 +1,8 @@
 import * as vscode from "vscode";
 import { ApiClient } from "../api/api-client";
+import { CopyFeatureKeyCommand } from "../commands/copy-feature-key-command";
 import { CreateGrowthBookConfigCommand } from "../commands/create-config-command";
+import { EditFeatureCommand } from "../commands/edit-feature-command";
 import { RefreshGrowthBookCommand } from "../commands/refresh-growthbook-command";
 import {
   FeatureListTreeDataProvider,
@@ -107,7 +109,9 @@ export class ExtensionManagement implements IExtensionManagement {
         new RefreshGrowthBookCommand(
           this.refreshFeatures.bind(this)
         ).register(),
-        new CreateGrowthBookConfigCommand().register()
+        new CreateGrowthBookConfigCommand().register(),
+        new EditFeatureCommand().register(),
+        new CopyFeatureKeyCommand().register()
       );
 
       // Initialize the tree view
@@ -118,6 +122,7 @@ export class ExtensionManagement implements IExtensionManagement {
 
       return Promise.resolve();
     } catch (e) {
+      console.error("❗️ Extension activation error", e);
       return Promise.reject("GrowthBook: Cannot fetch features");
     }
   }
