@@ -13,8 +13,7 @@ In order to use the extension, your project will need to have a `.growthbook.jso
 
 ```json
 {
-  "featuresHost": "http://localhost:3100",
-  "featuresKey": "key_dev_abc123xyz456",
+  "featuresEndpoint": "http://localhost:3100/api/features/key_dev_abc123xyz456",
   "appHost": "http://localhost:3100"  
 }
 ```

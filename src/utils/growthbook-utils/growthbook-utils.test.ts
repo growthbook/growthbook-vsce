@@ -5,16 +5,16 @@ describe("growthbook-utils", () => {
     expect(
       validateConfig({
         appHost: "http://localhost:3100",
-        featuresHost: "http://localhost:3100",
-        featuresKey: "key_dev_abc123",
+        featuresEndpoint:
+          "https://cdn.growthbook.io/api/features/key_prod_a1f3c34b105965df",
       })
     ).toEqual({ isValid: true, errors: [] });
     expect(
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       validateConfig({
-        featuresHost: "http://localhost:3100",
-        featuresKey: "key_dev_abc123",
+        featuresEndpoint:
+          "https://cdn.growthbook.io/api/features/key_prod_a1f3c34b105965df",
       })
     ).toEqual({ isValid: false, errors: ["appHost"] });
     expect(
@@ -22,15 +22,7 @@ describe("growthbook-utils", () => {
       // @ts-ignore
       validateConfig({
         appHost: "http://localhost:3100",
-        featuresKey: "key_dev_abc123",
       })
-    ).toEqual({ isValid: false, errors: ["featuresHost"] });
-    expect(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      validateConfig({
-        appHost: "http://localhost:3100",
-      })
-    ).toEqual({ isValid: false, errors: ["featuresHost", "featuresKey"] });
+    ).toEqual({ isValid: false, errors: ["featuresEndpoint"] });
   });
 });

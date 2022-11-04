@@ -10,10 +10,8 @@ export interface IApiClient {
 }
 
 type ApiClientConfig = {
-  featuresHost: string;
+  featuresEndpoint: string;
   appHost: string;
-  // apiKey: string;
-  featuresKey: string;
 };
 
 export enum ApiError {
@@ -25,7 +23,6 @@ export class ApiClient implements IApiClient {
 
   constructor(private options: ApiClientConfig) {
     this.featuresClient = Axios.create({
-      baseURL: options.featuresHost,
       headers: {
         "X-GrowthBook-Client": "growthbook-vsce",
       },
@@ -34,7 +31,7 @@ export class ApiClient implements IApiClient {
 
   getFeatures = async () => {
     return this.featuresClient
-      .get<FeaturesResponse>(`/api/features/${this.options.featuresKey}`)
+      .get<FeaturesResponse>(this.options.featuresEndpoint)
       .then((response) => {
         const features: FeatureDefinition[] = [];
 

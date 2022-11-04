@@ -23,8 +23,7 @@ export const validateConfig = (
 
   const requiredConfig: (keyof GrowthBookConfig)[] = [
     "appHost",
-    "featuresHost",
-    "featuresKey",
+    "featuresEndpoint",
   ];
 
   const errors: string[] = requiredConfig.filter((k) => !config[k]);

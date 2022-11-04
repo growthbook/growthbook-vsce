@@ -75,13 +75,12 @@ export class ExtensionManagement implements IExtensionManagement {
     }
 
     // The .growthbook.json config file is considered to be valid at this point and we can safely initialize the ApiClient
-    const { featuresHost, featuresKey, appHost } = this.growthBookConfig;
+    const { featuresEndpoint, appHost } = this.growthBookConfig;
 
     /* eslint-disable @typescript-eslint/no-non-null-assertion -- handled by validateConfig() */
     this.apiClient = new ApiClient({
       appHost: appHost!,
-      featuresHost: featuresHost!,
-      featuresKey: featuresKey!,
+      featuresEndpoint: featuresEndpoint!,
     });
     /* eslint-enable @typescript-eslint/no-non-null-assertion */
   }

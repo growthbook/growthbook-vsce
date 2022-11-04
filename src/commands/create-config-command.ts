@@ -32,8 +32,7 @@ export class CreateGrowthBookConfigCommand implements ICommand {
 
       try {
         const defaultConfig: GrowthBookConfig = {
-          featuresHost: "https://cdn.growthbook.io",
-          featuresKey: "key_prod_",
+          featuresEndpoint: "",
           appHost: "https://app.growthbook.io",
         };
 

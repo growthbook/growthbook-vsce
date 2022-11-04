@@ -27,8 +27,7 @@ export const doesPathExist = (path: string): boolean => {
 };
 
 export type GrowthBookConfig = {
-  featuresHost: string | null;
-  featuresKey: string | null;
+  featuresEndpoint: string | null;
   appHost: string | null;
 };
 
@@ -48,8 +47,7 @@ export const getGrowthBookConfig = (
     const parsedConfig = JSON.parse(configContents);
 
     return {
-      featuresHost: parsedConfig.featuresHost || null,
-      featuresKey: parsedConfig.featuresKey || null,
+      featuresEndpoint: parsedConfig.featuresEndpoint || null,
       appHost: parsedConfig.appHost || null,
     };
   } catch (e) {
