@@ -14,9 +14,6 @@ export class CopyFeatureKeyCommand implements ICommand {
       (treeItem: FeatureListTreeItem) => {
         const rootPath = getWorkspaceRootPath();
         if (!rootPath) {
-          vscode.window.showErrorMessage(
-            "Must be in a folder in order to create a GrowthBook configuration file"
-          );
           return;
         }
 
