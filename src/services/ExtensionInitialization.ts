@@ -169,11 +169,11 @@ export class ExtensionManagement implements IExtensionManagement {
    */
   private initializeTreeView(): void {
     vscode.window.registerTreeDataProvider(
-      "featuresList",
+      "growthbook.featuresList",
       new FeatureListTreeDataProvider(this.context, this.features)
     );
 
-    this.treeView = vscode.window.createTreeView("featuresList", {
+    this.treeView = vscode.window.createTreeView("growthbook.featuresList", {
       treeDataProvider: new FeatureListTreeDataProvider(
         this.context,
         this.features
