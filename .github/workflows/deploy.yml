@@ -30,8 +30,8 @@ jobs:
             growthbook-*.vsix
           if-no-files-found: error
 
-      # - name: Publish to Marketplace
-      #   env:
-      #     VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
-      #   run: |
-      #     npx vsce publish -p $VSCE_TOKEN
+      - name: Publish to Marketplace
+        env:
+          VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
+        run: |
+          npx vsce publish -p $VSCE_TOKEN
