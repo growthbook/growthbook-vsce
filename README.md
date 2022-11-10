@@ -72,8 +72,8 @@ You can create this configuration in one of the following ways:
 }
 ```
 
-- `**featuresEndpoint**`: This is available on the [Environments &rarr; SDK Endpoints](https://app.growthbook.io/environments) screen in GrowthBook
-- `**appHost**`: This is the URL for the running application instance of GrowthBook. If you registered at growthbook.com, use the one that is generated for you, otherwise specify the URL of your self-hosted instance.
+- **`featuresEndpoint`**: This is available on the [Environments &rarr; SDK Endpoints](https://app.growthbook.io/environments) screen in GrowthBook
+- **`appHost`**: This is the URL for the running application instance of GrowthBook. If you registered at growthbook.com, use the one that is generated for you, otherwise specify the URL of your self-hosted instance.
 
 ❗️ **Note**: We recommend that you omit this file from your project's version control and provide a sample `.growthbook.json.example` file that your team can copy locally, e.g. `cp .growthbook.json.example .growthbook.json`.
 
