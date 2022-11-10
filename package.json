@@ -1,7 +1,10 @@
 {
   "name": "growthbook",
-  "displayName": "growthbook",
+  "displayName": "GrowthBook",
   "description": "View your project's GrowthBook features right from Visual Studio Code",
+  "icon": "growthbook-vsce-icon.png",
+  "repository": "https://github.com/growthbook/growthbook-vsce",
+  "publisher": "GrowthBook",
   "version": "0.0.1",
   "license": "MIT",
   "engines": {
@@ -61,7 +64,7 @@
     "watch": "tsc -watch -p ./",
     "lint:fix": "yarn lint --fix",
     "lint": "eslint src --ext ts --cache --cache-strategy content",
-    "package": "rm *.vsix || true && vsce package --allow-missing-repository",
+    "package": "rm *.vsix || true && vsce package",
     "lint:ci": "yarn lint -- --max-warnings 0",
     "coverage": "open coverage/index.html",
     "test": "jest --config jest.config.js",
