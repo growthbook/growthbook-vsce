@@ -1,7 +1,10 @@
 {
   "name": "growthbook",
-  "displayName": "growthbook",
+  "displayName": "GrowthBook",
   "description": "View your project's GrowthBook features right from Visual Studio Code",
+  "icon": "growthbook-vsce-icon.png",
+  "repository": "https://github.com/growthbook/growthbook-vsce",
+  "publisher": "GrowthBook",
   "version": "0.0.1",
   "license": "MIT",
   "engines": {
@@ -11,7 +14,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onView:featuresList",
+    "onView:growthbook.featuresList",
     "onCommand:growthbook.refreshFeatures"
   ],
   "main": "./out/extension.js",
@@ -20,7 +23,7 @@
       "view/title": [
         {
           "command": "growthbook.refreshFeatures",
-          "when": "true",
+          "when": "view == growthbook.featuresList",
           "group": "navigation"
         }
       ],
@@ -39,14 +42,14 @@
     },
     "viewsWelcome": [
       {
-        "view": "featuresList",
+        "view": "growthbook.featuresList",
         "contents": "Add a .growthbook.json file or some features to get started. [Learn more](https://docs.growthbook.io/app/features)\n[Add Configuration](command:growthbook.createConfig)"
       }
     ],
     "views": {
       "explorer": [
         {
-          "id": "featuresList",
+          "id": "growthbook.featuresList",
           "name": "Features"
         }
       ]
@@ -89,7 +92,7 @@
     "watch": "tsc -watch -p ./",
     "lint:fix": "yarn lint --fix",
     "lint": "eslint src --ext ts --cache --cache-strategy content",
-    "package": "rm *.vsix || true && vsce package --allow-missing-repository",
+    "package": "rm *.vsix || true && vsce package",
     "lint:ci": "yarn lint -- --max-warnings 0",
     "coverage": "open coverage/index.html",
     "test": "jest --config jest.config.js",
