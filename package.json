@@ -31,12 +31,12 @@
       "view/item/context": [
         {
           "command": "growthbook.copyFeatureKey",
-          "when": "view == featuresList",
+          "when": "true",
           "group": "inline"
         },
         {
           "command": "growthbook.editFeature",
-          "when": "view == featuresList",
+          "when": "true",
           "group": "inline"
         }
       ]
